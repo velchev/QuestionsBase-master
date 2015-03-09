@@ -1,0 +1,50 @@
+﻿@model Repository.Entities.QuestionEntity
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Question Details</h2>
+
+<div>
+    <h4>QuestionEntity</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionType.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionType.Type)
+        </dd>
+        
+         <dt>
+            @Html.DisplayNameFor(model => model.DifficultyLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DifficultyLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Answer)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.Answer)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,45 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - QuestionBase</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery", "~/bundles/jqueryui", "~/bundles/jqueryval", "~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    @Scripts.Render("~/scripts/ckeditor/ckeditor.js")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("QuestionBase", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Question Types", "Index", "QuestionType", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Questions", "Index", "Question", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Take a Test!", "Index", "TakeTest", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - <a href="http://velchev.co.uk" target="_blank">http://Velchev.co.uk</a></p>
+        </footer>
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
