@@ -6,26 +6,69 @@
 }
 
 <h2>QB Login</h2>
+<style>
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #eee;
+    }
+
+    .form-signin {
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+    }
+
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+            .form-signin .form-control:focus {
+                z-index: 2;
+            }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+</style>
+
+
 
 @using (Html.BeginForm("LogOn", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "formLogin", role = "form" }))
 {
-    <div class='row'>
-        <div class="col-xs-12">
-            <div class="text-center">
+    <div class="container" style="width: 400px">
 
-                <label class="control-label">
-                    <strong>@Html.LabelFor(x => x.Username)</strong>
-                </label>
+        <form class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            @Html.LabelFor(x => x.Username, null, new { @class = "sr-only" })
+            @Html.TextBoxFor(x => x.Username, null, new { placeholder = "Username", required = "", autofocus = "", @class = "form-control" })
 
-                @Html.TextBoxFor(x => x.Username)
-                <label class="control-label">
-                    <strong>@Html.LabelFor(x => x.Password)</strong>
-                </label>
-                @Html.PasswordFor(x => x.Password)
-
-                <input type="submit" value="Login" />
-
-            </div>
-        </div>
+            @Html.LabelFor(x => x.Password, null, new { @class = "sr-only" })
+            @Html.TextBoxFor(x => x.Password, null, new { placeholder = "Password", required = "", @class = "form-control", type = "password" })
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
     </div>
 }

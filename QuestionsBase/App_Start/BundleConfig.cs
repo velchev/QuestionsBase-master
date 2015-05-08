@@ -1,4 +1,4 @@
-﻿namespace QuestionsBase.App_Start
+﻿namespace QuestionsBase
 {
     using System.Web.Optimization;
 

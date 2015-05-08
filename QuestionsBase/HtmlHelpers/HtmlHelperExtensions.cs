@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace QuestionsBase.HtmlHelpers
+﻿namespace QuestionsBase.HtmlHelpers
 {
     using System.Web.Mvc;
 
