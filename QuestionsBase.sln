@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakesForTesting", "FakesFor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedTests", "AutomatedTests\AutomatedTests.csproj", "{FBC6C66E-B781-466C-96F4-CE0D6AD7F054}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionBase.ViewTests", "QuestionBase.ViewTests\QuestionBase.ViewTests.csproj", "{21400BA0-7A21-4D4A-B22B-DEFC14E1BD8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionsBase.FunctionalUI.Tests", "QuestionsBase.FunctionalUI.Tests\QuestionsBase.FunctionalUI.Tests.csproj", "{72C5F47F-F61C-49CE-9E26-40DACED6675E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{FBC6C66E-B781-466C-96F4-CE0D6AD7F054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBC6C66E-B781-466C-96F4-CE0D6AD7F054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBC6C66E-B781-466C-96F4-CE0D6AD7F054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21400BA0-7A21-4D4A-B22B-DEFC14E1BD8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21400BA0-7A21-4D4A-B22B-DEFC14E1BD8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21400BA0-7A21-4D4A-B22B-DEFC14E1BD8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21400BA0-7A21-4D4A-B22B-DEFC14E1BD8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C5F47F-F61C-49CE-9E26-40DACED6675E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C5F47F-F61C-49CE-9E26-40DACED6675E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C5F47F-F61C-49CE-9E26-40DACED6675E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C5F47F-F61C-49CE-9E26-40DACED6675E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

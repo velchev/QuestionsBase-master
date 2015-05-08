@@ -1,4 +1,6 @@
 ﻿@using System.Web.Optimization
+@using QuestionsBase.HtmlHelpers
+@using QuestionsBase.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,38 +10,54 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery", "~/bundles/jqueryui", "~/bundles/jqueryval", "~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
+    @*<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-twipsy.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-popover.js")"></script>*@
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    @*<link href="@Url.Content("~/Content/chosen.css")" rel="stylesheet" />*@
+    @*<script type="text/javascript" src="@Url.Content("~/Scripts/chosen.jquery.js")"></script>*@
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.1/chosen.jquery.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.1/chosen.css" rel="stylesheet" />
     @Scripts.Render("~/scripts/ckeditor/ckeditor.js")
-
+    
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("QuestionBase", "Index", "Home", null, new { @class = "navbar-brand" })
-                @Html.ActionLink("Question Types", "Index", "QuestionType", null, new { @class = "navbar-brand" })
-                @Html.ActionLink("Questions", "Index", "Question", null, new { @class = "navbar-brand" })
-                @Html.ActionLink("Take a Test!", "Index", "TakeTest", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
-        </div>
-    </div>
+<body  ng-app="App">
+    <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("QB", "Index", "Home", null, new { @class = "navbar-brand" })
+                </div>
 
-    <div class="container body-content">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="@Html.ActivePage("Home", "Index")">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="@Html.ActivePage("QuestionType", "Index")">@Html.ActionLink("Question Types", "Index", "QuestionType")</li>
+                        <li class="@Html.ActivePage("Question", "Index")">@Html.ActionLink("Questions", "Index", "Question")</li>
+                        <li class="@Html.ActivePage("TakeTest", "Index")">@Html.ActionLink("Take a Test!", "Index", "TakeTest")</li>
+                        <li>@Html.Partial("_LogOff")</li>
+                    </ul>
+                    @Html.Partial("_Search", new SearchModel())
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
         @RenderBody()
         <hr />
+
         <footer>
             <p>&copy; @DateTime.Now.Year - <a href="http://velchev.co.uk" target="_blank">http://Velchev.co.uk</a></p>
         </footer>
     </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
     @RenderSection("scripts", required: false)
+    <script type="text/javascript" src="@Url.Content("~/Scripts/App.js")"></script>
 </body>
 </html>

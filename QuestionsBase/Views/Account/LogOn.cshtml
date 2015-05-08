@@ -1,0 +1,31 @@
+﻿@model QuestionsBase.Controllers.LoginViewModel
+
+@{
+    ViewBag.Title = "LogOn";
+
+}
+
+<h2>QB Login</h2>
+
+@using (Html.BeginForm("LogOn", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "formLogin", role = "form" }))
+{
+    <div class='row'>
+        <div class="col-xs-12">
+            <div class="text-center">
+
+                <label class="control-label">
+                    <strong>@Html.LabelFor(x => x.Username)</strong>
+                </label>
+
+                @Html.TextBoxFor(x => x.Username)
+                <label class="control-label">
+                    <strong>@Html.LabelFor(x => x.Password)</strong>
+                </label>
+                @Html.PasswordFor(x => x.Password)
+
+                <input type="submit" value="Login" />
+
+            </div>
+        </div>
+    </div>
+}

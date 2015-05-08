@@ -2,87 +2,70 @@
 @{
     ViewBag.Title = "Slide";
 }
-
 @if (Model == null)
 {
     <h1>Please go back and select category which have questions!</h1>
 }
 else
 {
-    <h2>Slide Number @ViewBag.Number of @ViewBag.TotalNumber</h2>
-
-    using (Html.BeginForm("Next", "TakeTest", FormMethod.Post))
-    {
-    <div class="form-horizontal">
-        @Html.Hidden("questionTypeId", (object)ViewBag.QuestionTypeId)
-        @Html.Hidden("difficultyLevel", (object)ViewBag.DifficultyLevel)
-        @Html.Hidden("number", (object)ViewBag.Number)
-        @Html.Hidden("totalNumber", (object)ViewBag.TotalNumber)
-
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.LabelFor(x => x.DifficultyLevel)
-                @Model.DifficultyLevel
-            </div>
+    <div class="row" ng-controller="TakeTestController">
+        <div class="col-md-12">
+            <h2>Slide Number @ViewBag.Number of @ViewBag.TotalNumber</h2>
         </div>
+        <div class="col-md-12">
 
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.LabelFor(x => x.QuestionType.Type)
-                @Model.QuestionType.Type
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.LabelFor(x => x.Title)
-                @Model.Title
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-10">
-                <span id="spanShowAnswer" style="cursor: pointer; cursor: hand;">Show the Answer!</span>
-            </div>
-        </div>
-
-        <div class="form-group" id="divAnswer" style="display: none">
-            <div class="col-md-10">
-                @Html.LabelFor(x => x.Answer)
-                <dd>
-                    @Html.Raw(Model.Answer)
-                </dd>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Edit", "Edit", "Question", new { id = Model.Id }, null) |
-                <input type="submit" value="Next" class="btn btn-default" />
-            </div>
+            @using (Html.BeginForm("Next", "TakeTest", FormMethod.Post))
+            {
+                <div class="form-horizontal">
+                    @Html.Hidden("questionTypeId", (object)ViewBag.QuestionTypeId)
+                    @Html.Hidden("difficultyLevel", (object)ViewBag.DifficultyLevel)
+                    @Html.Hidden("number", (object)ViewBag.Number)
+                    @Html.Hidden("totalNumber", (object)ViewBag.TotalNumber)
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.LabelFor(x => x.DifficultyLevel)
+                            @Model.DifficultyLevel
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.LabelFor(x => x.QuestionType.Type)
+                            @Model.QuestionType.Type
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.LabelFor(x => x.Title)
+                            @Model.Title
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <a ng-click="showme=true" ng-hide="showme" style="cursor: pointer; cursor: hand;">Show the Answer!</a>
+                            <a ng-click="showme=false" ng-show="showme" style="cursor: pointer; cursor: hand;">Hide the Answer!</a>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divAnswer" ng-show="showme">
+                        <div class="col-md-10">
+                            @Html.LabelFor(x => x.Answer)
+                            <dd>
+                                @Html.Raw(Model.Answer)
+                            </dd>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink("Edit", "Edit", "Question", new { id = Model.Id }, null) |
+                            <input type="submit" value="Next" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-    }
 }
-
-@section
-    scripts
+@section scripts
     {
-    <script>
-        var visible = 0;
-        $(document).ready(function () {
-
-            $("#spanShowAnswer").click(function () {
-                if (visible == 0) {
-                    document.getElementById('divAnswer').style.display = 'block';
-                    visible = 1;
-                    $("#spanShowAnswer").text('Hide the Answer!');
-                } else {
-                    document.getElementById('divAnswer').style.display = 'none';
-                    visible = 0;
-                    $("#spanShowAnswer").text('Show the Answer!');
-                }
-            });
-        });
-    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Controllers/TakeTest.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Factories/TakeTestFactory.js")"></script>
 }

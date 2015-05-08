@@ -1,87 +1,151 @@
-﻿@model IEnumerable<Repository.Entities.QuestionEntity>
+﻿@using Repository.Entities
+@model IEnumerable<Repository.Entities.QuestionEntity>
 
 @{
     ViewBag.Title = "Index";
 }
+<script src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+<link href="@Url.Content("~/Content/jquery.dataTables.css")" rel="stylesheet"/>
 
-<h2>List of Questions</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
-@Html.DropDownList("QuestionTypeEntityId", "Select") <b>@Model.Count() question</b>
-<input type="text" id="inputSearch" value="@ViewBag.Search"/> <input type="submit" value="Search" id="btnSearch" class="btn btn-default" />
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DifficultyLevel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuestionType.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model =>model.Title)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DifficultyLevel)
-
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuestionType.Type)
-            </td>
-            <td>
-                <a href="@Url.Action("Details", new { id = item.Id })">@Html.DisplayFor(modelItem => item.Title) </a>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+<style>
+    #QuestionTypeEntityId {
+        width: 200px;;
     }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <h2>List of Questions</h2>    
+    </div>
+    
+    
+</div>
+<div class="row">
+    <div class="col-md-4">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-default active", role = "button" })
+    </div>
+    <div class="col-md-4">
+        @Html.DropDownList("QuestionTypeEntityId")
+        <b>@Model.Count() question</b>
+    </div>
+    <div class="col-md-4">
+        <input type="text" id="inputSearch" value="@ViewBag.Search" /> <input type="submit" value="Search" id="btnSearch" class="btn btn-primary btn-default" />
+    </div>
+</div>
 
-</table>
-@section scripts
+    
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DifficultyLevel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.QuestionType.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DifficultyLevel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuestionType.Type)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = item.Id })">@Html.DisplayFor(modelItem => item.Title) </a>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </table>
+        
+        @*<table id="questionTable" class="table">
+            <thead>
+                <tr>
+                    <th>DifficultyLevel</th>
+                    <th>QuestionType</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+        </table>*@
+    </div>
+</div>
+    @section scripts
 {
-    <script type="text/javascript" language="javascript">
-        $("#inputSearch").focus();
+        <script type="text/javascript" language="javascript">
+            var table=
+            $(document).ready(function () {
+                console.log("ready!");
+                $("#QuestionTypeEntityId").chosen({
+                    disable_search_threshold: 2,
+                    no_results_text: "Oops, nothing found!",
+                    width: "300px"
+                });
 
-        $('#QuestionTypeEntityId').change(function () {
-            var text1 = $("#QuestionTypeEntityId :selected").text(); //the text content of the selected option
-            var text2 = $("#QuestionTypeEntityId").val(); //the value of the selected option
-            var rootDir = "@Url.Content("~/")";
-            window.location.href = rootDir + "Question/Filter/?questionTypeId=" + text2;
-        });
-        
-        $('#btnSearch').click(function() {
-            var text1 = $("#QuestionTypeEntityId :selected").text(); //the text content of the selected option
-            var text2 = $("#QuestionTypeEntityId").val(); //the value of the selected option
-            var rootDir = "@Url.Content("~/")";
-            window.location.href = rootDir + "Question/Filter/?questionTypeId=" + text2 + "&search=" + $("#inputSearch").val();
-        });
-        
-        $(document).on('keyup', function (evt) {
-            if (evt.keyCode == 13) {
-                $('#btnSearch').click();
-                $("#inputSearch").focus();
-            }
-        });
-        
-        $(document).on('keyup', function (evt) {
-            if (evt.keyCode == 27) {
-                $("#inputSearch").val('');
-                $('#btnSearch').click();
-                $("#inputSearch").focus();
-            }
-        });
-    </script>
-}
+                @*table = $('#questionTable').dataTable({
+                    "ajax": {
+                        "url": '@Url.Action("GetAllQuestionTypes")',
+                        "type": "POST",
+                        "dataSrc":""
+                    },
+                    "columns": [
+                        {
+                            "data":"Id",
+                            "visible":false
+                        },
+                        { "data": "Type" },
+                        {
+                            "data":"Id",
+                            "render":function(data, type, row) {
+                                return '<button type="button" class="btn btn-xs btn-danger" onclick="removeQuestionType(\'' + data + '\')"><span class=">/span> </button>';
+                            },
+                            "orderable":false
+                        }
+                    ],"paginate":false
+                });*@
+
+
+            });
+            
+            $("#inputSearch").focus();
+
+            $('#QuestionTypeEntityId').change(function () {
+                var text1 = $("#QuestionTypeEntityId :selected").text(); //the text content of the selected option
+                var text2 = $("#QuestionTypeEntityId").val(); //the value of the selected option
+                var rootDir = "@Url.Content("~/")";
+                window.location.href = rootDir + "Question/Filter/?questionTypeId=" + text2;
+            });
+
+            $('#btnSearch').click(function () {
+                var text1 = $("#QuestionTypeEntityId :selected").text(); //the text content of the selected option
+                var text2 = $("#QuestionTypeEntityId").val(); //the value of the selected option
+                var rootDir = "@Url.Content("~/")";
+                window.location.href = rootDir + "Question/Filter/?questionTypeId=" + text2 + "&search=" + $("#inputSearch").val();
+            });
+
+            $(document).on('keyup', function (evt) {
+                if (evt.keyCode == 13) {
+                    $('#btnSearch').click();
+                    $("#inputSearch").focus();
+                }
+            });
+
+            $(document).on('keyup', function (evt) {
+                if (evt.keyCode == 27) {
+                    $("#inputSearch").val('');
+                    $('#btnSearch').click();
+                    $("#inputSearch").focus();
+                }
+            });
+        </script>
+    }

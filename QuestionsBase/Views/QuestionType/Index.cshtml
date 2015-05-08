@@ -1,15 +1,17 @@
 ﻿@model IEnumerable<Repository.Entities.QuestionTypeEntity>
-
 @{
     ViewBag.Title = "Index";
 }
 
+<link href="@Url.Content("~/Content/jquery.dataTables.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery.dataTables.js")"></script>
+
 <h2>List of Question Types</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-default active", role = "button" })
 </p>
-<table class="table">
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Type)
@@ -17,17 +19,118 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+</table>*@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#fiko">Add</button>
+
+<table id="questionTable" class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+@section scripts
+{
+    <script type="text/javascript" language="javascript">
+        var table;
+        $(document).ready(function() {
+            console.log("ready!");
+
+       
+
+            table = $('#questionTable').dataTable({
+                "ajax": {
+                    "url": '@Url.Action("GetAllQuestionTypes", "QuestionType")',
+                    "type": "POST",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    {
+                        "data": "Id",
+                        "visible": false
+                    },
+                    { "data": "Type" },
+                    {
+                        "data": "Id",
+                        "render": function(data, type, row) {
+                            return '<button type="button" class="btn btn-xs btn-danger" onclick="removeQuestionType(\'' + data + '\')"><span class="glyphicon glyphicon-remove"></span></button>' +
+                                '&nbsp;' + '<button type="button" class="btn btn-xs btn-default" onclick="editQuestionType(\'' + data + '\')"><span class="glyphicon glyphicon-pencil"></span></button>' +
+                                '&nbsp;' + '<button type="button" class="btn btn-xs btn-default" onclick="viewQuestionType(\'' + data + '\')"><span class="glyphicon glyphicon-zoom-in"></span></button>';
+                        },
+                        "orderable": false
+                    }
+                ],
+                "paginate": false
+            });
+        });
+
+        function removeQuestionType(id) {
+            console.log(id);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RemoveQuestionType", "QuestionType")',
+                data: "{id:" + id + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: su
+            });
+            
+        }
+        function viewQuestionType(id) {
+            console.log(id);
+            var editUrl = 'http://' + window.location.host + '/QuestionType/Details/' + id;
+            console.log(editUrl);
+
+            window.location = editUrl;
+
+        }
+        function editQuestionType(id) {
+            console.log(id);
+            var editUrl = 'http://' + window.location.host + '/QuestionType/Edit/' + id;
+            console.log(editUrl);
+
+            window.location = editUrl;
+
+        }
+        function su(result) {
+            
+            console.log(result);
+            table.api().ajax.reload();
+        }
+
+    </script>
 }
 
-</table>
+
+
+<div class="modal fade" id="fiko" tabindex="-1" role="dialog" aria-labelledby="fiko" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+
+</div>

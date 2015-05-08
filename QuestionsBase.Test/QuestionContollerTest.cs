@@ -105,7 +105,7 @@
         }
 
 
-        [TestCase]
+        [Test]
         public void ConstructorReturnNotNullInstance()
         {
             var contextMock = new Mock<ControllerContext>();
@@ -121,41 +121,60 @@
             _target.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
 
-        [TestCase]
-        public void IndexReturnsNotNullView()
-        {
-            var result = _target.Index();
-            var view = result as ViewResult;
-            Assert.IsNotNull(view);
-            Assert.IsNotNull(view.Model);
+        //[TestCase]
+        //public void IndexReturnsNotNullView()
+        //{
+        //    var result = _target.Index();
+        //    var view = result as ViewResult;
+        //    Assert.IsNotNull(view);
+        //    Assert.IsNotNull(view.Model);
 
-            Assert.AreEqual(2, ((IEnumerable<QuestionEntity>)view.Model).Count());
+        //    Assert.AreEqual(2, ((IEnumerable<QuestionEntity>)view.Model).Count());
+        //}
+
+
+        //[TestCase]
+        //public void FilterReturnsNotNullView()
+        //{
+        //    var result = _target.Filter(1);
+        //    var view = result as ViewResult;
+        //    Assert.IsNotNull(view);
+        //    Assert.IsNotNull(view.Model);
+
+        //    Assert.AreEqual(1, ((IEnumerable<QuestionEntity>)view.Model).Count());
+        //}
+
+        //[TestCase]
+        //public void FilterWithNoParameterReturnsNotNullView()
+        //{
+        //    var result = _target.Filter();
+        //    var view = result as ViewResult;
+        //    Assert.IsNotNull(view);
+        //    Assert.IsNotNull(view.Model);
+
+        //    Assert.AreEqual(2, ((IEnumerable<QuestionEntity>)view.Model).Count());
+        //}
+
+        [TestCase(1, 2, Result = 3)]
+        [TestCase(200, 2, Result = 202)]
+        public int Addition(int a, int b)
+        {
+            return a + b;
+        }
+        [Test, TestCaseSource("additionCases")]
+        public void AdditionCases(int a, int b, int c)
+        {
+            var x = a + b;
+            Assert.That(x, NUnit.Framework.Is.EqualTo(c));
         }
 
+        private static object[] additionCases = {
+            new object[] { 12, 3, 15 },
+            new object[] { 12, 2, 14 },
+            new object[] { 12, 4, 13 } 
+        };
 
-        [TestCase]
-        public void FilterReturnsNotNullView()
-        {
-            var result = _target.Filter(1);
-            var view = result as ViewResult;
-            Assert.IsNotNull(view);
-            Assert.IsNotNull(view.Model);
-
-            Assert.AreEqual(1, ((IEnumerable<QuestionEntity>)view.Model).Count());
-        }
-
-        [TestCase]
-        public void FilterWithNoParameterReturnsNotNullView()
-        {
-            var result = _target.Filter();
-            var view = result as ViewResult;
-            Assert.IsNotNull(view);
-            Assert.IsNotNull(view.Model);
-
-            Assert.AreEqual(2, ((IEnumerable<QuestionEntity>)view.Model).Count());
-        }
-
-        [TestCase]
+        [Test]
         public void DetailsReturnsOneItemTest()
         {
             var result = _target.Details(1);
@@ -185,7 +204,7 @@
             _target.WithCallTo(x => x.Details(1)).ShouldRenderDefaultView();
 
             int? aa = null;
-            _target.WithCallTo(x=>x.Edit(aa)).ShouldGiveHttpStatus(HttpStatusCode.BadRequest);
+            _target.WithCallTo(x => x.Edit(aa)).ShouldGiveHttpStatus(HttpStatusCode.BadRequest);
 
             _target.WithCallTo(x => x.Edit(-1)).ShouldGiveHttpStatus(HttpStatusCode.NotFound);
             _target.WithCallTo(x => x.Edit(1)).ShouldRenderDefaultView();
