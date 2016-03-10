@@ -59,3 +59,17 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@section scripts
+{
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            console.log("ready!");
+            $("#QuestionTypeEntityId").chosen({
+                disable_search_threshold: 10,
+                no_results_text: "Oops, nothing found!",
+                width: "300px"
+            });
+          
+        });
+</script>
+}

@@ -10,7 +10,6 @@ namespace QuestionsBase
     using System.Web.Optimization;
     using Autofac.Integration.Mvc;
     using QuestionBase.IOC;
-    using QuestionsBase.App_Start;
     using Autofac;
 
     public class MvcApplication : System.Web.HttpApplication

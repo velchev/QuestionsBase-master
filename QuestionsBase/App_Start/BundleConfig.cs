@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace QuestionsBase.App_Start
+﻿namespace QuestionsBase
 {
     using System.Web.Optimization;
 
@@ -20,7 +15,9 @@ namespace QuestionsBase.App_Start
                 "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.js"
+                //, "~/Scripts/bootstrap-*"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.unobtrusive*",
